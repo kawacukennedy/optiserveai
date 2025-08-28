@@ -15,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Calendly Resource Preloading */}
         <link 
           rel="preload" 
           href="https://assets.calendly.com/assets/external/widget.js" 
@@ -22,14 +23,38 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link 
+          rel="preload" 
+          href="https://assets.calendly.com/assets/external/widget.css" 
+          as="style" 
+          crossOrigin="anonymous"
+        />
+        <link 
           rel="dns-prefetch" 
+          href="//calendly.com" 
+        />
+        <link 
+          rel="dns-prefetch" 
+          href="//assets.calendly.com" 
+        />
+        <link 
+          rel="dns-prefetch" 
+          href="//api.calendly.com" 
+        />
+        <link 
+          rel="preconnect" 
           href="https://calendly.com" 
+          crossOrigin="anonymous"
         />
         <link 
           rel="preconnect" 
           href="https://assets.calendly.com" 
           crossOrigin="anonymous"
         />
+        
+        {/* SEO and Performance Meta Tags */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#000000" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="font-sf-pro antialiased">
         <ThemeProvider
