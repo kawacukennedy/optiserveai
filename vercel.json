@@ -42,12 +42,7 @@
         }
       ]
     }
-  ],
-  "functions": {
-    "app/**/*.{js,ts,tsx}": {
-      "maxDuration": 10
-    }
-  },
+  ]
   "env": {
     "NEXT_TELEMETRY_DISABLED": "1"
   },
