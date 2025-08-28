@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "regions": ["iad1"],
   "builds": [
     {
       "src": "next.config.ts",
       "use": "@vercel/next"
     }
   ],
+  "regions": ["iad1"],
   "headers": [
     {
       "source": "/(.*)",
@@ -42,11 +42,8 @@
         }
       ]
     }
-  ]
+  ],
   "env": {
     "NEXT_TELEMETRY_DISABLED": "1"
-  },
-  "github": {
-    "autoAlias": false
   }
 }
