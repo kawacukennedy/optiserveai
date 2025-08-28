@@ -87,7 +87,7 @@ export function Demo() {
                     <div className="glass rounded-xl p-4">
                       <div className="flex items-center space-x-3">
                         <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                        <span className="text-foreground font-medium">AI Assistant: "Hello! I can help you schedule your HVAC service..."</span>
+                        <span className="text-foreground font-medium">AI Assistant: &quot;Hello! I can help you schedule your HVAC service...&quot;</span>
                       </div>
                     </div>
                   </div>
@@ -100,7 +100,7 @@ export function Demo() {
                     </div>
                     <p className="text-white/80 mb-4">Demo video would be embedded here</p>
                     <p className="text-white/60 text-sm">
-                      In a real implementation, you'd embed your Loom video or other video player here
+                      In a real implementation, you&apos;d embed your Loom video or other video player here
                     </p>
                   </div>
                 </div>

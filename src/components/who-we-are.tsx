@@ -2,10 +2,10 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Phone, MessageSquare, Clock, Target } from "lucide-react"
+import { Phone, MessageSquare, Clock, Target, LucideIcon } from "lucide-react"
 
 const FeatureCard = ({ icon: Icon, title, description, delay }: {
-  icon: any;
+  icon: LucideIcon;
   title: string;
   description: string;
   delay: number;

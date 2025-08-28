@@ -2,10 +2,10 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Shield, Zap, Users, TrendingUp } from "lucide-react"
+import { Shield, Zap, Users, TrendingUp, LucideIcon } from "lucide-react"
 
 const ValueCard = ({ icon: Icon, title, description, delay }: {
-  icon: any;
+  icon: LucideIcon;
   title: string;
   description: string;
   delay: number;
@@ -78,7 +78,7 @@ export function MissionPromise() {
             className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed"
           >
             Every missed call is a missed opportunity. Every manual task is time stolen from what you do best. 
-            We're here to change that with intelligent automation that actually works.
+            We&apos;re here to change that with intelligent automation that actually works.
           </motion.p>
         </div>
 

@@ -133,7 +133,7 @@ export function Testimonials() {
                 transition={{ duration: 0.5 }}
                 className="text-xl md:text-2xl text-foreground/90 leading-relaxed text-center mb-8 font-medium"
               >
-                "{testimonials[currentTestimonial].content}"
+                &quot;{testimonials[currentTestimonial].content}&quot;
               </motion.blockquote>
 
               {/* Author */}

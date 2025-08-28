@@ -2,13 +2,13 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { Search, Calculator, CalendarCheck, ArrowRight } from "lucide-react"
+import { Search, Calculator, CalendarCheck, ArrowRight, LucideIcon } from "lucide-react"
 
 const StepCard = ({ step, title, description, icon: Icon, delay }: {
   step: number;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   delay: number;
 }) => (
   <motion.div
