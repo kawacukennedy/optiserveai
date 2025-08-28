@@ -2,6 +2,15 @@
 
 import { useEffect } from 'react'
 
+declare global {
+  interface Window {
+    requestIdleCallback: (
+      callback: IdleRequestCallback,
+      options?: IdleRequestOptions
+    ) => number
+  }
+}
+
 export function CalendlyPreload() {
   useEffect(() => {
     // Early preload of Calendly resources
@@ -62,10 +71,12 @@ export function CalendlyPreload() {
     }
 
     // Run on component mount with requestIdleCallback for better performance
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(preloadCalendlyAssets)
-    } else {
-      setTimeout(preloadCalendlyAssets, 1)
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(preloadCalendlyAssets)
+      } else {
+        setTimeout(preloadCalendlyAssets, 1)
+      }
     }
   }, [])
 
