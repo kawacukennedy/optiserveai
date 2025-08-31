@@ -1,6 +1,18 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
+
+// Declare Cal globally to avoid TypeScript errors
+declare global {
+  interface Window {
+    Cal: {
+      (action: string, namespace: string, options: Record<string, unknown>): void
+      ns: Record<string, (action: string, options: Record<string, unknown>) => void>
+      loaded?: boolean
+      q?: unknown[]
+    }
+  }
+}
 
 interface CalBookingProps {
   isOpen: boolean
@@ -8,60 +20,72 @@ interface CalBookingProps {
 }
 
 export function CalBooking({ isOpen, onClose }: CalBookingProps) {
+  const calContainerRef = useRef<HTMLDivElement>(null)
+  const scriptLoadedRef = useRef(false)
+
   useEffect(() => {
-    if (isOpen && typeof window !== 'undefined') {
+    if (isOpen && typeof window !== 'undefined' && !scriptLoadedRef.current) {
       // Load Cal.com embed script
       const script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.innerHTML = `
-        (function (C, A, L) { 
-          let p = function (a, ar) { a.q.push(ar); }; 
-          let d = C.document; 
-          C.Cal = C.Cal || function () { 
-            let cal = C.Cal; 
-            let ar = arguments; 
-            if (!cal.loaded) { 
-              cal.ns = {}; 
-              cal.q = cal.q || []; 
-              d.head.appendChild(d.createElement("script")).src = A; 
-              cal.loaded = true; 
-            } 
-            if (ar[0] === L) { 
-              const api = function () { p(api, arguments); }; 
-              const namespace = ar[1]; 
-              api.q = api.q || []; 
-              if(typeof namespace === "string"){
-                cal.ns[namespace] = cal.ns[namespace] || api;
-                p(cal.ns[namespace], ar);
-                p(cal, ["initNamespace", namespace]);
-              } else p(cal, ar); 
-              return;
-            } 
-            p(cal, ar); 
-          }; 
-        })(window, "https://app.cal.com/embed/embed.js", "init");
-        
-        Cal("init", "30min", {origin:"https://app.cal.com"});
-        
-        Cal.ns["30min"]("inline", {
-          elementOrSelector:"#my-cal-inline-30min",
-          config: {"layout":"month_view"},
-          calLink: "kawacu-kent-vnfqcr/30min",
-        });
-        
-        Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
-      `
+      script.src = 'https://app.cal.com/embed/embed.js'
+      script.async = true
+      
+      script.onload = () => {
+        scriptLoadedRef.current = true
+        initializeCal()
+      }
+      
       document.head.appendChild(script)
+    } else if (isOpen && scriptLoadedRef.current) {
+      initializeCal()
+    }
+  }, [isOpen])
 
-      // Cleanup function
-      return () => {
-        // Remove the script when component unmounts
-        if (script.parentNode) {
-          script.parentNode.removeChild(script)
+  const initializeCal = () => {
+    if (window.Cal && calContainerRef.current) {
+      // Clear any existing content
+      calContainerRef.current.innerHTML = ''
+      
+      try {
+        window.Cal('init', 'demo-30min', {
+          origin: 'https://app.cal.com'
+        })
+        
+        window.Cal.ns['demo-30min']('inline', {
+          elementOrSelector: calContainerRef.current,
+          config: {
+            layout: 'month_view',
+            theme: 'dark'
+          },
+          calLink: 'kawacu-kent-vnfqcr/30min'
+        })
+        
+        window.Cal.ns['demo-30min']('ui', {
+          hideEventTypeDetails: false,
+          layout: 'month_view',
+          theme: 'dark'
+        })
+      } catch (error) {
+        console.error('Cal.com initialization error:', error)
+        // Fallback: redirect to Cal.com directly
+        if (calContainerRef.current) {
+          calContainerRef.current.innerHTML = `
+            <div class="text-center p-8">
+              <p class="text-foreground/70 mb-6">Loading booking calendar...</p>
+              <a 
+                href="https://cal.com/kawacu-kent-vnfqcr/30min" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-teal to-primary-teal-light text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200"
+              >
+                Book on Cal.com →
+              </a>
+            </div>
+          `
         }
       }
     }
-  }, [isOpen])
+  }
 
   if (!isOpen) return null
 
@@ -91,10 +115,19 @@ export function CalBooking({ isOpen, onClose }: CalBookingProps) {
 
             {/* Cal.com embed */}
             <div 
-              style={{width:'100%', height:'600px', overflow:'scroll'}} 
-              id="my-cal-inline-30min"
-              className="rounded-lg border border-primary-teal/20"
-            ></div>
+              ref={calContainerRef}
+              style={{width:'100%', height:'600px', overflow:'auto'}} 
+              className="rounded-lg border border-primary-teal/20 bg-background/5"
+            >
+              {!scriptLoadedRef.current && (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-teal mx-auto mb-4"></div>
+                    <p className="text-foreground/70">Loading booking calendar...</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

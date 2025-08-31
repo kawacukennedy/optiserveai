@@ -38,10 +38,10 @@ export function Footer() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-4xl md:text-6xl font-sf font-bold text-foreground mb-8 leading-tight"
+                className="text-4xl md:text-6xl font-sf font-bold text-white mb-8 leading-tight"
               >
                 Ready to Transform Your 
-                <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
+                <span className="text-primary-teal">
                   {" "}Med-Spa Experience?
                 </span>
               </motion.h2>
