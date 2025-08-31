@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
-import { CalendlyBooking } from "./calendly-booking"
-import { useCalendly } from "../hooks/use-calendly"
+import { CalBooking } from "./cal-booking"
+import { useCal } from "../hooks/use-cal"
 
 
 export function Hero() {
-  const { isOpen, openCalendly, closeCalendly } = useCalendly()
+  const { isOpen, openCal, closeCal } = useCal()
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
@@ -56,7 +56,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-6 justify-center items-center"
         >
           <motion.button
-            onClick={openCalendly}
+            onClick={openCal}
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 25px 50px rgba(0, 191, 166, 0.4)"
@@ -100,10 +100,10 @@ export function Hero() {
       </div>
 
 
-      {/* Calendly Modal */}
-      <CalendlyBooking 
+      {/* Cal.com Modal */}
+      <CalBooking 
         isOpen={isOpen} 
-        onClose={closeCalendly} 
+        onClose={closeCal} 
       />
     </section>
   )

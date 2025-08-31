@@ -3,8 +3,8 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { Check, Star, Crown, Zap, ArrowRight } from "lucide-react"
-import { CalendlyBooking } from "./calendly-booking"
-import { useCalendly } from "../hooks/use-calendly"
+import { CalBooking } from "./cal-booking"
+import { useCal } from "../hooks/use-cal"
 
 const pricingPlans = [
   {
@@ -64,7 +64,7 @@ const pricingPlans = [
 export function Pricing() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const { isOpen, openCalendly, closeCalendly } = useCalendly()
+  const { isOpen, openCal, closeCal } = useCal()
 
   return (
     <>
@@ -181,7 +181,7 @@ export function Pricing() {
 
                     {/* CTA Button */}
                     <motion.button
-                      onClick={openCalendly}
+                      onClick={openCal}
                       whileHover={{ 
                         scale: 1.05,
                         boxShadow: plan.popular ? "0 25px 50px rgba(0, 191, 166, 0.4)" : "0 15px 30px rgba(0, 0, 0, 0.1)"
@@ -224,7 +224,7 @@ export function Pricing() {
         </div>
       </section>
 
-      <CalendlyBooking isOpen={isOpen} onClose={closeCalendly} />
+      <CalBooking isOpen={isOpen} onClose={closeCal} />
     </>
   )
 }

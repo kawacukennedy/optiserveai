@@ -1,11 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CalendlyBooking } from "./calendly-booking"
-import { useCalendly } from "../hooks/use-calendly"
+import { CalBooking } from "./cal-booking"
+import { useCal } from "../hooks/use-cal"
 
 export function Navigation() {
-  const { isOpen, openCalendly, closeCalendly } = useCalendly()
+  const { isOpen, openCal, closeCal } = useCal()
 
   return (
     <>
@@ -40,7 +40,7 @@ export function Navigation() {
 
           <div className="flex items-center space-x-3">
             <motion.button
-              onClick={openCalendly}
+              onClick={openCal}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-5 py-2 bg-gradient-to-r from-primary-teal to-primary-teal-light hover:from-primary-teal-light hover:to-primary-teal text-white rounded-full font-medium text-sm shadow-lg hover:shadow-xl transition-all duration-300"
@@ -52,7 +52,7 @@ export function Navigation() {
       </div>
     </motion.nav>
 
-    <CalendlyBooking isOpen={isOpen} onClose={closeCalendly} />
+    <CalBooking isOpen={isOpen} onClose={closeCal} />
     </>
   )
 }

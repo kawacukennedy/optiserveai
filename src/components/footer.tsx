@@ -3,13 +3,13 @@
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 import { ArrowRight, Phone, Mail, MapPin, Shield, CheckCircle, MessageCircle, CreditCard } from "lucide-react"
-import { CalendlyBooking } from "./calendly-booking"
-import { useCalendly } from "../hooks/use-calendly"
+import { CalBooking } from "./cal-booking"
+import { useCal } from "../hooks/use-cal"
 
 export function Footer() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const { isOpen, openCalendly, closeCalendly } = useCalendly()
+  const { isOpen, openCal, closeCal } = useCal()
 
   return (
     <>
@@ -63,7 +63,7 @@ export function Footer() {
                 className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8"
               >
                 <motion.button
-                  onClick={openCalendly}
+                  onClick={openCal}
                   whileHover={{ 
                     scale: 1.05,
                     boxShadow: "0 25px 50px rgba(0, 191, 166, 0.5)"
@@ -76,7 +76,7 @@ export function Footer() {
                 </motion.button>
                 
                 <motion.button
-                  onClick={openCalendly}
+                  onClick={openCal}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="px-10 py-5 glass rounded-full font-semibold text-xl text-foreground hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300"
@@ -249,7 +249,7 @@ export function Footer() {
       </section>
     </footer>
 
-    <CalendlyBooking isOpen={isOpen} onClose={closeCalendly} />
+    <CalBooking isOpen={isOpen} onClose={closeCal} />
     </>
   )
 }
