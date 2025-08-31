@@ -7,43 +7,43 @@ import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react"
 const testimonials = [
   {
     id: 1,
-    name: "Mike Johnson",
-    company: "Johnson HVAC Services",
-    role: "Owner",
-    content: "OptiServe AI transformed our business overnight. We went from missing 3-4 calls a day to capturing every single lead. Our booking rate increased by 280% in the first month.",
+    name: "Dr. Amanda Rodriguez",
+    company: "Luxe Aesthetics Med Spa",
+    role: "Medical Director",
+    content: "OptiServe AI revolutionized our client experience. We went from missing consultation requests to capturing every inquiry through WhatsApp. Our booking rate increased by 340% in just 6 weeks.",
     rating: 5,
-    avatar: "M.J",
-    gradient: "from-blue-600 to-purple-600"
+    avatar: "A.R",
+    gradient: "from-primary-teal to-primary-teal-light"
   },
   {
     id: 2,
-    name: "Sarah Martinez",
-    company: "Elite Plumbing Co.",
-    role: "Operations Manager",
-    content: "The AI qualification process is incredible. It filters out tire-kickers and sends us only serious customers ready to book. Our conversion rate has never been higher.",
+    name: "Jennifer Kim",
+    company: "Radiance Medical Spa",
+    role: "Practice Manager",
+    content: "The AI qualification is incredible for our high-end treatments. It pre-qualifies clients for procedures like CoolSculpting and Botox, so we only spend time with serious prospects. Our conversion rate doubled.",
     rating: 5,
-    avatar: "S.M",
-    gradient: "from-purple-600 to-indigo-600"
+    avatar: "J.K",
+    gradient: "from-primary-navy to-primary-navy-light"
   },
   {
     id: 3,
-    name: "David Chen",
-    company: "Chen Electrical",
-    role: "Founder",
-    content: "I was skeptical about AI, but OptiServe proved me wrong. It handles customer inquiries better than my previous receptionist, and it works 24/7 without breaks.",
+    name: "Dr. Michael Chen",
+    company: "Elite Beauty & Wellness",
+    role: "Founder & Medical Director",
+    content: "I was hesitant about AI handling medical consultations, but OptiServe's med-spa training is exceptional. It understands aesthetic treatments and communicates professionally with our clientele.",
     rating: 5,
-    avatar: "D.C",
-    gradient: "from-indigo-600 to-blue-600"
+    avatar: "M.C",
+    gradient: "from-primary-teal to-primary-navy"
   },
   {
     id: 4,
     name: "Lisa Thompson",
-    company: "Thompson Home Services",
-    role: "CEO",
-    content: "The automated scheduling integration is seamless. Customers love the instant response time, and I love not having to manage a call center anymore.",
+    company: "Glow Medical Spa",
+    role: "Owner",
+    content: "The WhatsApp automation is seamless. Our clients love the instant responses for appointment scheduling and treatment questions. We've eliminated phone tag completely and our staff can focus on patient care.",
     rating: 5,
     avatar: "L.T",
-    gradient: "from-blue-600 to-purple-600"
+    gradient: "from-primary-navy to-primary-teal-light"
   }
 ]
 
@@ -84,7 +84,7 @@ export function Testimonials() {
             transition={{ duration: 0.6 }}
             className="mb-4"
           >
-            <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">What Our Clients Say</span>
+            <span className="text-primary-teal font-semibold text-lg">What Med-Spa Professionals Say</span>
           </motion.div>
           
           <motion.h2
@@ -93,9 +93,9 @@ export function Testimonials() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-6 leading-tight"
           >
-            Trusted by Home Service 
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              {" "}Professionals Nationwide
+            Trusted by Premium 
+            <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
+              {" "}Med-Spas Nationwide
             </span>
           </motion.h2>
         </div>
@@ -110,11 +110,11 @@ export function Testimonials() {
           {/* Main Testimonial */}
           <div className="glass rounded-3xl p-8 md:p-12 relative overflow-hidden">
             {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-indigo-600/5" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-teal/5 via-primary-navy/5 to-primary-teal/5" />
             
             <div className="relative z-10">
               {/* Quote Icon */}
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center mb-8 mx-auto">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center mb-8 mx-auto">
                 <Quote className="w-8 h-8 text-white" />
               </div>
 
@@ -189,7 +189,7 @@ export function Testimonials() {
                   onClick={() => setCurrentTestimonial(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentTestimonial
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600'
+                      ? 'bg-gradient-to-r from-primary-teal to-primary-teal-light'
                       : 'bg-foreground/30 hover:bg-foreground/50'
                   }`}
                 />

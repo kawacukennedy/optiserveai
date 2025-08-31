@@ -21,7 +21,7 @@ export function Navigation() {
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-3"
           >
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-r from-apple-blue to-apple-blue-light flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center">
               <span className="text-white font-bold text-sm">O</span>
             </div>
             <span className="font-sf-pro font-semibold text-lg text-foreground">
@@ -43,7 +43,7 @@ export function Navigation() {
               onClick={openCalendly}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-5 py-2 bg-apple-blue hover:bg-apple-blue-light text-white rounded-full font-medium text-sm shadow-lg hover:shadow-xl transition-all duration-300"
+              className="px-5 py-2 bg-gradient-to-r from-primary-teal to-primary-teal-light hover:from-primary-teal-light hover:to-primary-teal text-white rounded-full font-medium text-sm shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Book Demo
             </motion.button>

@@ -18,6 +18,12 @@ const config: Config = {
         foreground: "var(--foreground)",
         secondary: "var(--secondary)",
         accent: "var(--accent)",
+        'primary-teal': '#00BFA6',
+        'primary-navy': '#0A2540',
+        'primary-teal-light': '#26D0CE',
+        'primary-teal-dark': '#008B7A',
+        'primary-navy-light': '#1A365D',
+        'primary-navy-dark': '#061B2F',
         apple: {
           blue: {
             light: '#007AFF',

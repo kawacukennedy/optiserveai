@@ -1,9 +1,12 @@
 import { Navigation } from "@/components/navigation";
 import { Hero } from "@/components/hero";
-import { WhoWeAre } from "@/components/who-we-are";
+import { SocialProof } from "@/components/social-proof";
+import { FeaturesGrid } from "@/components/features-grid";
+import { DemoShowcase } from "@/components/demo-showcase";
 import { HowItWorks } from "@/components/how-it-works";
-import { MissionPromise } from "@/components/mission-promise";
+import { Pricing } from "@/components/pricing";
 import { Testimonials } from "@/components/testimonials";
+import { FAQ } from "@/components/faq";
 import { Footer } from "@/components/footer";
 
 export default function Home() {
@@ -11,10 +14,13 @@ export default function Home() {
     <main className="min-h-screen">
       <Navigation />
       <Hero />
-      <WhoWeAre />
+      <SocialProof />
+      <FeaturesGrid />
+      <DemoShowcase />
       <HowItWorks />
-      <MissionPromise />
+      <Pricing />
       <Testimonials />
+      <FAQ />
       <Footer />
     </main>
   );

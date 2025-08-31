@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
-import { ArrowRight, Phone, Mail, MapPin } from "lucide-react"
+import { ArrowRight, Phone, Mail, MapPin, Shield, CheckCircle, MessageCircle, CreditCard } from "lucide-react"
 import { CalendlyBooking } from "./calendly-booking"
 import { useCalendly } from "../hooks/use-calendly"
 
@@ -17,7 +17,7 @@ export function Footer() {
       {/* Final CTA Section */}
       <section className="py-32 relative">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-indigo-600/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-teal/20 via-primary-navy/10 to-primary-teal/20" />
           <div className="absolute inset-0 backdrop-blur-3xl" />
         </div>
         
@@ -30,7 +30,7 @@ export function Footer() {
           >
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 transform rotate-12 scale-150" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-teal to-primary-navy transform rotate-12 scale-150" />
             </div>
             
             <div className="relative z-10">
@@ -40,9 +40,9 @@ export function Footer() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-4xl md:text-6xl font-sf font-bold text-foreground mb-8 leading-tight"
               >
-                Ready to Stop 
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                  {" "}Missing Jobs?
+                Ready to Transform Your 
+                <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
+                  {" "}Med-Spa Experience?
                 </span>
               </motion.h2>
               
@@ -52,8 +52,8 @@ export function Footer() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-xl text-foreground/70 mb-12 max-w-3xl mx-auto leading-relaxed"
               >
-                Join 500+ home service businesses already using OptiServe AI to capture more leads, 
-                qualify better prospects, and book more jobs on autopilot.
+                Join 200+ premium med-spas already using OptiServe AI to automate client communications, 
+                increase bookings, and deliver exceptional patient experiences 24/7.
               </motion.p>
               
               <motion.div
@@ -66,12 +66,12 @@ export function Footer() {
                   onClick={openCalendly}
                   whileHover={{ 
                     scale: 1.05,
-                    boxShadow: "0 25px 50px rgba(59, 130, 246, 0.5)"
+                    boxShadow: "0 25px 50px rgba(0, 191, 166, 0.5)"
                   }}
                   whileTap={{ scale: 0.95 }}
-                  className="group px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-3"
+                  className="group px-12 py-6 bg-gradient-to-r from-primary-teal to-primary-teal-light text-white rounded-full font-semibold text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-3"
                 >
-                  <span>Get Started</span>
+                  <span>Book a Demo</span>
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </motion.button>
                 
@@ -81,36 +81,55 @@ export function Footer() {
                   whileTap={{ scale: 0.95 }}
                   className="px-10 py-5 glass rounded-full font-semibold text-xl text-foreground hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300"
                 >
-                  Schedule Demo
+                  Start Free Trial
                 </motion.button>
               </motion.div>
               
-              {/* Guarantee badges */}
+              {/* Trust badges */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm"
+                className="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm mb-8"
               >
                 <div className="flex items-center space-x-2 text-green-600 dark:text-green-400">
-                  <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
-                    <span className="text-white text-xs">✓</span>
-                  </div>
-                  <span className="font-medium">30-Day Free Trial</span>
+                  <CheckCircle className="w-5 h-5" />
+                  <span className="font-medium">HIPAA Compliant</span>
+                </div>
+                <div className="hidden sm:block w-2 h-2 rounded-full bg-foreground/30" />
+                <div className="flex items-center space-x-2 text-primary-teal">
+                  <MessageCircle className="w-5 h-5" />
+                  <span className="font-medium">WhatsApp Business API</span>
                 </div>
                 <div className="hidden sm:block w-2 h-2 rounded-full bg-foreground/30" />
                 <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
-                  <div className="w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-                    <span className="text-white text-xs">✓</span>
-                  </div>
-                  <span className="font-medium">No Setup Fees</span>
+                  <CreditCard className="w-5 h-5" />
+                  <span className="font-medium">Stripe Secure Payments</span>
                 </div>
-                <div className="hidden sm:block w-2 h-2 rounded-full bg-foreground/30" />
-                <div className="flex items-center space-x-2 text-purple-600 dark:text-purple-400">
-                  <div className="w-5 h-5 rounded-full bg-purple-500 flex items-center justify-center">
-                    <span className="text-white text-xs">✓</span>
-                  </div>
-                  <span className="font-medium">Cancel Anytime</span>
+              </motion.div>
+
+              {/* Additional trust indicators */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto"
+              >
+                <div className="flex flex-col items-center p-3 glass rounded-xl">
+                  <Shield className="w-6 h-6 text-primary-teal mb-2" />
+                  <span className="text-xs font-medium text-foreground/70">SSL Encrypted</span>
+                </div>
+                <div className="flex flex-col items-center p-3 glass rounded-xl">
+                  <CheckCircle className="w-6 h-6 text-green-500 mb-2" />
+                  <span className="text-xs font-medium text-foreground/70">GDPR Ready</span>
+                </div>
+                <div className="flex flex-col items-center p-3 glass rounded-xl">
+                  <MessageCircle className="w-6 h-6 text-primary-teal mb-2" />
+                  <span className="text-xs font-medium text-foreground/70">WhatsApp Verified</span>
+                </div>
+                <div className="flex flex-col items-center p-3 glass rounded-xl">
+                  <CreditCard className="w-6 h-6 text-blue-500 mb-2" />
+                  <span className="text-xs font-medium text-foreground/70">PCI Compliant</span>
                 </div>
               </motion.div>
             </div>
@@ -129,7 +148,7 @@ export function Footer() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-apple-blue to-apple-blue-light flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center">
                   <span className="text-white font-bold">O</span>
                 </div>
                 <span className="font-sf-pro font-semibold text-xl text-foreground">
@@ -137,8 +156,8 @@ export function Footer() {
                 </span>
               </div>
               <p className="text-foreground/70 leading-relaxed mb-6">
-                AI-powered dispatch and automation tools for home service professionals. 
-                Capture more leads, book more jobs, grow your business.
+                AI-powered WhatsApp automation specifically designed for medical spas. 
+                Transform client communications and boost your booking conversions 24/7.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-foreground/60">

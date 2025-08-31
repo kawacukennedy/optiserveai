@@ -28,17 +28,17 @@ const StepCard = ({ step, title, description, icon: Icon, delay }: {
     {/* Glass Card */}
     <div className="glass-card relative overflow-hidden h-full">
       {/* Step Number */}
-      <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
+      <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
         {step}
       </div>
 
       {/* Icon */}
-      <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+      <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-primary-teal to-primary-navy flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
         <Icon className="w-8 h-8 text-white" />
       </div>
 
       {/* Content */}
-      <h3 className="text-2xl font-sf font-bold text-foreground mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+      <h3 className="text-2xl font-sf font-bold text-foreground mb-4 group-hover:text-primary-teal transition-colors duration-300">
         {title}
       </h3>
       <p className="text-foreground/70 leading-relaxed text-lg">
@@ -46,7 +46,7 @@ const StepCard = ({ step, title, description, icon: Icon, delay }: {
       </p>
 
       {/* Glow effect on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-blue-600/5 to-purple-600/5 rounded-2xl" />
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-primary-teal/5 to-primary-navy/5 rounded-2xl" />
     </div>
 
     {/* Arrow for desktop */}
@@ -58,7 +58,7 @@ const StepCard = ({ step, title, description, icon: Icon, delay }: {
           transition={{ delay: delay + 0.5, duration: 0.5 }}
           className="w-16 h-16 glass rounded-full flex items-center justify-center"
         >
-          <ArrowRight className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          <ArrowRight className="w-8 h-8 text-primary-teal" />
         </motion.div>
       </div>
     )}
@@ -88,7 +88,7 @@ export function HowItWorks() {
             transition={{ duration: 0.6 }}
             className="mb-4"
           >
-            <span className="text-blue-600 dark:text-blue-400 font-semibold text-lg">How It Works</span>
+            <span className="text-primary-teal font-semibold text-lg">How It Works</span>
           </motion.div>
           
           <motion.h2
@@ -98,8 +98,8 @@ export function HowItWorks() {
             className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-6 leading-tight"
           >
             Simple 3-Step Process to 
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              {" "}Transform Your Business
+            <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
+              {" "}Transform Your Med-Spa
             </span>
           </motion.h2>
           
@@ -109,8 +109,8 @@ export function HowItWorks() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-foreground/70 max-w-3xl mx-auto leading-relaxed"
           >
-            Our AI dispatcher seamlessly handles customer inquiries from qualification to booking, 
-            so you can focus on delivering outstanding service.
+            Our WhatsApp AI seamlessly handles client inquiries from initial consultation questions to treatment booking, 
+            so you can focus on delivering exceptional aesthetic treatments.
           </motion.p>
         </div>
 
@@ -118,24 +118,24 @@ export function HowItWorks() {
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-16 relative">
           <StepCard
             step={1}
-            title="Qualify"
-            description="AI engages with potential customers, asking intelligent questions to understand their needs, budget, and urgency. Only qualified leads make it through."
+            title="Qualify Clients"
+            description="AI engages with potential clients through WhatsApp, asking about treatment goals, skin concerns, and budget. Only serious prospects advance to consultation booking."
             icon={Search}
             delay={0.3}
           />
           
           <StepCard
             step={2}
-            title="Estimate"
-            description="Based on the qualification, our system provides instant, accurate estimates using your pricing rules and service parameters. No more back-and-forth."
+            title="Recommend Treatments"
+            description="Based on client responses, AI suggests personalized treatment options with pricing. Discusses Botox, fillers, laser treatments, and skincare based on individual needs."
             icon={Calculator}
             delay={0.5}
           />
           
           <StepCard
             step={3}
-            title="Book"
-            description="Qualified leads with approved estimates are automatically scheduled into your calendar based on availability, location, and service requirements."
+            title="Schedule & Confirm"
+            description="Qualified clients are automatically booked for consultations or treatments. Payment processing and appointment confirmations happen instantly through WhatsApp."
             icon={CalendarCheck}
             delay={0.7}
           />
@@ -152,12 +152,12 @@ export function HowItWorks() {
           <motion.button
             whileHover={{ 
               scale: 1.05,
-              boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+              boxShadow: "0 20px 40px rgba(0, 191, 166, 0.4)"
             }}
             whileTap={{ scale: 0.95 }}
-            className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-3 mx-auto"
+            className="group px-8 py-4 bg-gradient-to-r from-primary-teal to-primary-teal-light text-white rounded-full font-semibold text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center space-x-3 mx-auto"
           >
-            <span>See It In Action</span>
+            <span>See Your Med-Spa Demo</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </motion.button>
         </motion.div>
