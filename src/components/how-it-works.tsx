@@ -26,7 +26,7 @@ const StepCard = ({ step, title, description, icon: Icon, delay }: {
     style={{ transformStyle: 'preserve-3d' }}
   >
     {/* Glass Card */}
-    <div className="glass-card relative overflow-hidden h-full">
+    <div className="dim-card relative overflow-hidden h-full">
       {/* Step Number */}
       <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform duration-300">
         {step}
@@ -76,7 +76,7 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" ref={ref} className="py-32 relative overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-50/40 to-transparent dark:via-apple-gray-5/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dim-bg via-dim-lighter to-primary-navy" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">

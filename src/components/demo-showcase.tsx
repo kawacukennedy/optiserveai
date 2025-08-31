@@ -53,7 +53,7 @@ export function DemoShowcase() {
   }
 
   return (
-    <section ref={ref} className="py-32 relative overflow-hidden bg-gradient-to-b from-teal-50/30 to-white dark:from-primary-navy-light to-primary-navy">
+    <section ref={ref} className="py-32 relative overflow-hidden bg-gradient-to-b from-primary-navy to-dim-lighter">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-20">
@@ -164,7 +164,7 @@ export function DemoShowcase() {
             <div className="max-w-md mx-auto">
               {/* Phone Frame */}
               <div className="relative">
-                <div className="glass rounded-[3rem] p-6 relative overflow-hidden">
+                <div className="dim-card rounded-[3rem] p-6 relative overflow-hidden border-2 border-primary-teal/20">
                   {/* Phone Header */}
                   <div className="flex items-center space-x-3 mb-6 p-4 bg-primary-teal rounded-2xl">
                     <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">

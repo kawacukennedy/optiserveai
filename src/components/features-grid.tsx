@@ -79,7 +79,7 @@ export function FeaturesGrid() {
   return (
     <section id="features" ref={ref} className="py-32 relative overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/50 to-white dark:from-primary-navy dark:via-primary-navy-light/50 dark:to-primary-navy" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dim-lighter via-primary-navy to-dim-bg" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -136,7 +136,7 @@ export function FeaturesGrid() {
               }}
               className="group relative"
             >
-              <div className="glass-card h-full relative overflow-hidden">
+              <div className="dim-card h-full relative overflow-hidden">
                 {/* Hover gradient background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 

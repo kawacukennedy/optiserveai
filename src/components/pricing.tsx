@@ -70,7 +70,7 @@ export function Pricing() {
     <>
       <section id="pricing" ref={ref} className="py-32 relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-teal-50/20 to-white dark:from-primary-navy dark:via-primary-navy-light/30 dark:to-primary-navy" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-navy via-dim-lighter to-dim-bg" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
@@ -136,7 +136,7 @@ export function Pricing() {
                   </div>
                 )}
 
-                <div className={`glass-card h-full relative overflow-hidden ${plan.popular ? 'border-2 border-primary-teal/30' : ''}`}>
+                <div className={`dim-card h-full relative overflow-hidden ${plan.popular ? 'border-2 border-primary-teal' : 'border border-primary-teal/20'}`}>
                   {/* Background gradient for popular plan */}
                   {plan.popular && (
                     <div className="absolute inset-0 bg-gradient-to-br from-primary-teal/5 to-primary-navy/5" />

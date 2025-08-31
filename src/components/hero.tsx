@@ -13,11 +13,12 @@ export function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24">
       {/* Animated Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-slate-50 dark:from-primary-navy dark:via-primary-navy-light dark:to-primary-navy-dark" />
-        <div className="absolute inset-0 teal-navy-gradient opacity-5" />
-        {/* Floating elements for premium feel */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary-teal/10 rounded-full blur-xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-primary-navy/10 rounded-full blur-xl animate-float" style={{animationDelay: '3s'}} />
+        <div className="absolute inset-0 bg-gradient-to-br from-dim-bg via-dim-lighter to-primary-navy-light" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-teal/5 via-primary-navy/10 to-primary-teal/5" />
+        {/* Floating elements for dim feel */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-primary-teal/20 rounded-full blur-xl animate-float" />
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-primary-teal/10 rounded-full blur-xl animate-float" style={{animationDelay: '3s'}} />
+        <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-primary-teal/15 rounded-full blur-2xl animate-float" style={{animationDelay: '1.5s'}} />
       </div>
       
 

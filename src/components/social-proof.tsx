@@ -36,7 +36,7 @@ export function SocialProof() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-20 relative overflow-hidden bg-gradient-to-b from-white to-teal-50/30 dark:from-primary-navy dark:to-primary-navy-light">
+    <section ref={ref} className="py-20 relative overflow-hidden bg-gradient-to-b from-dim-bg to-dim-lighter">
       <div className="max-w-7xl mx-auto px-4">
         {/* Trusted by section */}
         <motion.div
@@ -81,7 +81,7 @@ export function SocialProof() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-              className="glass rounded-2xl p-6 relative overflow-hidden group hover:scale-105 transition-all duration-300"
+              className="dim-card relative overflow-hidden group hover:scale-105 transition-all duration-300"
             >
               {/* Background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary-teal/5 to-primary-navy/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
