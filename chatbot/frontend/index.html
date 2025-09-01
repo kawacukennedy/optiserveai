@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiServe AI - Chat Demo</title>
+    <link rel="stylesheet" href="css/chat-widget.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Demo page content -->
+    <div class="demo-page">
+        <header class="demo-header">
+            <h1>OptiServe AI</h1>
+            <p>Experience our AI receptionist in action</p>
+        </header>
+        <main class="demo-content">
+            <p>This is a demo page showing how the chat widget integrates with your landing page. The chat bubble will appear in the bottom-right corner.</p>
+        </main>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="optiserve-chat-widget">
+        <!-- Floating Chat Bubble -->
+        <div id="chat-bubble" class="chat-bubble">
+            <div class="bubble-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H5.17L4 17.17V4H20V16Z" fill="currentColor"/>
+                    <circle cx="8" cy="10" r="1.5" fill="currentColor"/>
+                    <circle cx="12" cy="10" r="1.5" fill="currentColor"/>
+                    <circle cx="16" cy="10" r="1.5" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="bubble-pulse"></div>
+        </div>
+
+        <!-- Chat Panel -->
+        <div id="chat-panel" class="chat-panel">
+            <!-- Chat Header -->
+            <div class="chat-header">
+                <div class="header-content">
+                    <div class="logo-section">
+                        <div class="logo-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="32" height="32" rx="8" fill="#6366f1"/>
+                                <path d="M16 8L20.5 13H19V20H17V15H15V20H13V13H11.5L16 8Z" fill="white"/>
+                                <circle cx="16" cy="22" r="2" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="header-text">
+                            <h3>AI Receptionist</h3>
+                            <span class="status-indicator">
+                                <div class="status-dot"></div>
+                                Online
+                            </span>
+                        </div>
+                    </div>
+                    <button id="close-chat" class="close-button">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="chat-messages">
+                <div class="welcome-message">
+                    <div class="message ai-message">
+                        <div class="message-content">
+                            <p>👋 Welcome to OptiServe AI! I'm here to help you discover how our AI solutions can transform your business operations.</p>
+                            <p>What would you like to know about our services?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typing-indicator" class="typing-indicator">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="typing-text">AI is typing...</span>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <form id="chat-form" class="chat-form">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            placeholder="Type your message..."
+                            autocomplete="off"
+                            maxlength="500"
+                        >
+                        <button type="submit" id="send-button" class="send-button">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/chat-widget.js"></script>
+</body>
+</html>

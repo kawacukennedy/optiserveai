@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiServe AI Chat Widget - Integration Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f9f9f9;
+        }
+        .integration-guide {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        h1, h2 { color: #6366f1; }
+        pre {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid #6366f1;
+        }
+        code {
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+        .step {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid #10b981;
+        }
+        .warning {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #f0fdf4;
+            border-left-color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #10b981;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="integration-guide">
+        <h1>OptiServe AI Chat Widget Integration Guide</h1>
+        
+        <p>This guide will help you integrate the OptiServe AI chat widget into your landing page.</p>
+
+        <h2>Quick Integration (Copy & Paste)</h2>
+        
+        <div class="step">
+            <h3>Step 1: Add the CSS</h3>
+            <p>Add this to your HTML <code>&lt;head&gt;</code> section:</p>
+            <pre><code>&lt;!-- OptiServe AI Chat Widget Styles --&gt;
+&lt;link rel="stylesheet" href="https://yourdomain.com/chatbot/frontend/css/chat-widget.css"&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"&gt;</code></pre>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Add the HTML Widget</h3>
+            <p>Add this before the closing <code>&lt;/body&gt;</code> tag:</p>
+            <pre><code>&lt;!-- OptiServe AI Chat Widget --&gt;
+&lt;div id="optiserve-chat-widget"&gt;
+    &lt;!-- Floating Chat Bubble --&gt;
+    &lt;div id="chat-bubble" class="chat-bubble"&gt;
+        &lt;div class="bubble-icon"&gt;
+            &lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+                &lt;path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H5.17L4 17.17V4H20V16Z" fill="currentColor"/&gt;
+                &lt;circle cx="8" cy="10" r="1.5" fill="currentColor"/&gt;
+                &lt;circle cx="12" cy="10" r="1.5" fill="currentColor"/&gt;
+                &lt;circle cx="16" cy="10" r="1.5" fill="currentColor"/&gt;
+            &lt;/svg&gt;
+        &lt;/div&gt;
+        &lt;div class="bubble-pulse"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Chat Panel --&gt;
+    &lt;div id="chat-panel" class="chat-panel"&gt;
+        &lt;!-- Chat Header --&gt;
+        &lt;div class="chat-header"&gt;
+            &lt;div class="header-content"&gt;
+                &lt;div class="logo-section"&gt;
+                    &lt;div class="logo-icon"&gt;
+                        &lt;svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+                            &lt;rect width="32" height="32" rx="8" fill="#6366f1"/&gt;
+                            &lt;path d="M16 8L20.5 13H19V20H17V15H15V20H13V13H11.5L16 8Z" fill="white"/&gt;
+                            &lt;circle cx="16" cy="22" r="2" fill="white"/&gt;
+                        &lt;/svg&gt;
+                    &lt;/div&gt;
+                    &lt;div class="header-text"&gt;
+                        &lt;h3&gt;AI Receptionist&lt;/h3&gt;
+                        &lt;span class="status-indicator"&gt;
+                            &lt;div class="status-dot"&gt;&lt;/div&gt;
+                            Online
+                        &lt;/span&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;button id="close-chat" class="close-button"&gt;
+                    &lt;svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+                        &lt;path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/&gt;
+                    &lt;/svg&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Chat Messages --&gt;
+        &lt;div id="chat-messages" class="chat-messages"&gt;
+            &lt;div class="welcome-message"&gt;
+                &lt;div class="message ai-message"&gt;
+                    &lt;div class="message-content"&gt;
+                        &lt;p&gt;👋 Welcome to OptiServe AI! I'm here to help you discover how our AI solutions can transform your business operations.&lt;/p&gt;
+                        &lt;p&gt;What would you like to know about our services?&lt;/p&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Typing Indicator --&gt;
+        &lt;div id="typing-indicator" class="typing-indicator"&gt;
+            &lt;div class="typing-dots"&gt;
+                &lt;span&gt;&lt;/span&gt;
+                &lt;span&gt;&lt;/span&gt;
+                &lt;span&gt;&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;span class="typing-text"&gt;AI is typing...&lt;/span&gt;
+        &lt;/div&gt;
+
+        &lt;!-- Chat Input --&gt;
+        &lt;div class="chat-input-container"&gt;
+            &lt;form id="chat-form" class="chat-form"&gt;
+                &lt;div class="input-wrapper"&gt;
+                    &lt;input 
+                        type="text" 
+                        id="chat-input" 
+                        placeholder="Type your message..."
+                        autocomplete="off"
+                        maxlength="500"
+                    &gt;
+                    &lt;button type="submit" id="send-button" class="send-button"&gt;
+                        &lt;svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+                            &lt;path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/&gt;
+                        &lt;/svg&gt;
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Add the JavaScript</h3>
+            <p>Add this just before the closing <code>&lt;/body&gt;</code> tag (after the HTML widget):</p>
+            <pre><code>&lt;!-- OptiServe AI Chat Widget JavaScript --&gt;
+&lt;script src="https://yourdomain.com/chatbot/frontend/js/chat-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="success">
+            <h3>✅ That's it! Your chat widget should now be working.</h3>
+            <p>The chat bubble will appear in the bottom-right corner of your page.</p>
+        </div>
+
+        <h2>Advanced Integration Options</h2>
+
+        <div class="step">
+            <h3>Custom Configuration</h3>
+            <p>You can customize the chat widget behavior by adding this script after including the main JavaScript:</p>
+            <pre><code>&lt;script&gt;
+// Wait for the widget to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Access the chat widget instance
+    if (window.optiServeChat) {
+        // Example: Programmatically open the chat
+        // window.optiServeChat.openChat();
+        
+        // Example: Send a message programmatically
+        // window.optiServeChat.sendMessage('Hello, I need help with pricing');
+        
+        // Example: Clear the conversation
+        // window.optiServeChat.clearConversation();
+    }
+});
+
+// Update the Cal.com booking link
+// Edit the chat-widget.js file and replace 'https://cal.com/your-calendar-link' 
+// with your actual Cal.com booking URL
+&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="step">
+            <h3>Color Theme Customization</h3>
+            <p>To match your brand colors, add these CSS custom properties:</p>
+            <pre><code>&lt;style&gt;
+:root {
+    --primary-color: #your-brand-color;
+    --primary-hover: #your-brand-hover-color;
+    --bg-dark: #your-dark-bg-color;
+    --bg-secondary: #your-secondary-bg-color;
+}
+&lt;/style&gt;</code></pre>
+        </div>
+
+        <h2>Backend Configuration</h2>
+
+        <div class="step">
+            <h3>1. Update API Endpoint</h3>
+            <p>If your backend is running on a different domain, update the <code>apiEndpoint</code> in the JavaScript file:</p>
+            <pre><code>// In chat-widget.js, update this line:
+this.apiEndpoint = 'https://your-backend-domain.com/chat';</code></pre>
+        </div>
+
+        <div class="step">
+            <h3>2. Update Cal.com Link</h3>
+            <p>In the <code>chat-widget.js</code> file, find the <code>createDemoButton()</code> method and update the Cal.com URL:</p>
+            <pre><code>button.href = 'https://cal.com/your-actual-calendar-link';</code></pre>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ Important Notes</h3>
+            <ul>
+                <li>Make sure your backend server is running on the specified port (default: 3001)</li>
+                <li>Update the CORS settings if your frontend and backend are on different domains</li>
+                <li>Replace all placeholder URLs with your actual domain URLs</li>
+                <li>Test the widget on both desktop and mobile devices</li>
+            </ul>
+        </div>
+
+        <h2>Quick Test</h2>
+        <div class="step">
+            <h3>Testing Your Integration</h3>
+            <ol>
+                <li>Open your webpage in a browser</li>
+                <li>Look for the chat bubble in the bottom-right corner</li>
+                <li>Click the bubble to open the chat panel</li>
+                <li>Type a message and press Enter</li>
+                <li>The AI should respond within a few seconds</li>
+            </ol>
+        </div>
+
+        <h2>Troubleshooting</h2>
+        <div class="step">
+            <h3>Common Issues</h3>
+            <ul>
+                <li><strong>Chat bubble not showing:</strong> Check console for JavaScript errors</li>
+                <li><strong>No AI responses:</strong> Verify backend is running and API key is set</li>
+                <li><strong>Styling issues:</strong> Ensure CSS file is loaded correctly</li>
+                <li><strong>CORS errors:</strong> Update CORS settings in backend</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

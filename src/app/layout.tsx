@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ChatWidget } from "@/components/chat-widget";
 
 export const metadata: Metadata = {
   title: "OptiServe AI - AI-Powered Dispatch for Home Service Professionals",
@@ -64,6 +65,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           {children}
+          <ChatWidget />
         </ThemeProvider>
       </body>
     </html>
