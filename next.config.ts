@@ -73,16 +73,12 @@ const nextConfig: NextConfig = {
   // Configure output for static export if needed
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
   
-  // Enable webpack bundle analyzer in development
-  webpack: (config, { dev, isServer }) => {
-    if (dev && !isServer) {
+  // Minimal webpack configuration (when not using Turbopack)
+  webpack: (config, { dev }) => {
+    if (dev) {
       // Enable source maps in development
       config.devtool = 'eval-source-map'
     }
-    
-    // Optimize Calendly script loading
-    config.externals = config.externals || {}
-    
     return config
   }
 };
