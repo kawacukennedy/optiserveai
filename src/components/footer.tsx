@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
+import Image from "next/image"
 import { ArrowRight, Phone, Mail, MapPin, Shield, CheckCircle, MessageCircle, CreditCard } from "lucide-react"
 import { CalBooking } from "./cal-booking"
 import { useCal } from "../hooks/use-cal"
@@ -148,8 +149,14 @@ export function Footer() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center">
-                  <span className="text-white font-bold">O</span>
+                <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
+                  <Image
+                    src="/logo.svg"
+                    alt="OptiServe AI Logo"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                  />
                 </div>
                 <span className="font-sf-pro font-semibold text-xl text-foreground">
                   OptiServe AI

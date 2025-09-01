@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { CalBooking } from "./cal-booking"
 import { useCal } from "../hooks/use-cal"
 
@@ -21,8 +22,15 @@ export function Navigation() {
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-3"
           >
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-r from-primary-teal to-primary-teal-light flex items-center justify-center">
-              <span className="text-white font-bold text-sm">O</span>
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+              <Image
+                src="/logo.svg"
+                alt="OptiServe AI Logo"
+                width={32}
+                height={32}
+                className="object-contain"
+                priority
+              />
             </div>
             <span className="font-sf-pro font-semibold text-lg text-foreground">
               OptiServe AI
