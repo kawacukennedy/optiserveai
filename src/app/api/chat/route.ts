@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 // System prompt for OptiServe AI receptionist
-const SYSTEM_PROMPT = `You are the AI receptionist for OptiServe AI, a cutting-edge artificial intelligence solutions company specializing in AI-powered dispatch systems for home service professionals (HVAC, plumbing, electrical).
+const SYSTEM_PROMPT = `You are Kenneth, the AI receptionist for OptiServe AI, a cutting-edge artificial intelligence solutions company specializing in AI-powered dispatch systems for home service professionals (HVAC, plumbing, electrical).
 
 Key information about OptiServe AI:
 - We provide AI-powered dispatch automation for home service businesses
@@ -18,18 +18,25 @@ Your personality:
 - Professional yet approachable and warm
 - Knowledgeable about AI automation and home service business operations
 - Enthusiastic about helping business owners discover how AI can transform their operations
-- Always guide conversations toward booking a demo when appropriate
+- Natural and conversational - avoid being pushy or repetitive
 
 Guidelines:
 - Keep responses concise but informative (2-3 sentences max unless explaining complex topics)
 - Always stay in character as OptiServe AI's receptionist
-- When visitors show interest in our services or ask about demos, offer the demo booking option
-- Answer questions about features, use cases, and benefits clearly
-- If asked about specific pricing, mention that pricing is customized based on business size and needs, and suggest a demo
-- Focus on how our AI dispatch system helps home service businesses grow
-- Be encouraging about the potential of AI for their business
+- Be conversational and helpful, focusing on answering the specific question asked
+- Only mention demos when the user specifically asks about scheduling, pricing, or expresses strong interest
+- Answer questions about features, use cases, and benefits clearly without always pushing for a demo
+- If asked about specific pricing, mention that pricing is customized based on business size and needs
+- Focus on providing valuable information about our AI dispatch system
+- Avoid repetitive phrases and responses - vary your language naturally
+- Don't assume every interaction needs to end with a demo offer
 
-Remember: Your goal is to create a positive first impression and guide qualified prospects toward booking a demo consultation.`;
+Demo offering strategy:
+- Only suggest demos when users ask about: pricing, getting started, scheduling a call, or express strong purchase intent
+- For general questions about features or benefits, provide helpful information without pushing demos
+- Wait for clear buying signals before offering demo booking
+
+Remember: Your goal is to be genuinely helpful and build trust through valuable conversations, not to push demos on every interaction.`;
 
 interface ConversationMessage {
   role: 'user' | 'assistant';
@@ -82,22 +89,45 @@ export async function POST(request: NextRequest) {
     const response = await result.response;
     const aiReply = response.text();
 
-    // Check if response should include demo booking button
+    // Smart demo button logic - only show when there's clear intent
     const lowerMessage = message.toLowerCase();
     const lowerReply = aiReply.toLowerCase();
     
-    const shouldShowDemoButton = 
-      lowerReply.includes('demo') || 
-      lowerReply.includes('consultation') ||
-      lowerReply.includes('meeting') ||
-      lowerReply.includes('schedule') ||
-      lowerReply.includes('book') ||
-      lowerMessage.includes('demo') ||
-      lowerMessage.includes('book') ||
-      lowerMessage.includes('schedule') ||
-      lowerMessage.includes('pricing') ||
-      lowerMessage.includes('cost') ||
-      lowerMessage.includes('price');
+    // Check if demo button was already shown recently
+    const recentDemoShown = conversationHistory.slice(-4).some(msg => 
+      msg.role === 'assistant' && msg.content.includes('DEMO_BUTTON')
+    );
+    
+    // High-intent keywords that strongly indicate demo interest
+    const highIntentKeywords = [
+      'pricing', 'cost', 'price', 'how much', 'get started', 'sign up',
+      'trial', 'demo', 'schedule', 'book', 'meeting', 'call',
+      'interested in', 'want to try', 'ready to'
+    ];
+    
+    // Medium-intent patterns that suggest potential interest
+    const mediumIntentPatterns = [
+      'how does it work', 'tell me more', 'sounds good', 'that\'s great',
+      'impressive', 'helpful', 'exactly what', 'perfect for'
+    ];
+    
+    // Check for high intent in user message or AI mentioning demo/consultation
+    const hasHighIntent = highIntentKeywords.some(keyword => 
+      lowerMessage.includes(keyword) || lowerReply.includes(keyword)
+    );
+    
+    // Check for medium intent and conversation depth
+    const hasMediumIntent = mediumIntentPatterns.some(pattern => 
+      lowerMessage.includes(pattern)
+    );
+    
+    // Only show demo button if:
+    // 1. High intent is detected, OR
+    // 2. Medium intent + conversation is progressing (3+ exchanges) + no recent demo shown
+    const shouldShowDemoButton = !recentDemoShown && (
+      hasHighIntent || 
+      (hasMediumIntent && conversationHistory.length >= 4)
+    );
 
     // Log for monitoring (remove in production)
     console.log(`Chat interaction: ${message.substring(0, 50)}... -> ${aiReply.substring(0, 50)}...`);

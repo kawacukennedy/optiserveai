@@ -21,7 +21,7 @@ export function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: '👋 Welcome to OptiServe AI! I\'m here to help you discover how our AI solutions can transform your business operations.\n\nWhat would you like to know about our services?',
+      content: '👋 Hello! I\'m Kenneth, your AI receptionist at OptiServe AI. I\'m here to help you discover how our AI-powered dispatch solutions can transform your home service business operations.\n\nWhat would you like to know about our services?',
       role: 'assistant',
       timestamp: new Date(),
     },
@@ -71,10 +71,13 @@ export function ChatWidget() {
         },
         body: JSON.stringify({
           message: content.trim(),
-          conversationHistory: messages.slice(-10).map(msg => ({
-            role: msg.role,
-            content: msg.content,
-          })),
+          conversationHistory: messages
+            .slice(-12) // Keep more context for better conversation flow
+            .filter(msg => msg.content !== 'DEMO_BUTTON') // Remove demo buttons from context
+            .map(msg => ({
+              role: msg.role,
+              content: msg.content,
+            })),
         }),
       });
 
@@ -84,8 +87,8 @@ export function ChatWidget() {
 
       const data: ChatResponse = await response.json();
 
-      // Simulate typing delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Brief typing simulation for natural feel
+      await new Promise(resolve => setTimeout(resolve, 300));
 
       const assistantMessage: Message = {
         id: generateId(),
@@ -152,7 +155,7 @@ export function ChatWidget() {
       href="https://cal.com/kawacu-kent-vnfqcr/30min"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg mt-3"
+      className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-teal to-primary-teal-dark hover:from-primary-teal-dark hover:to-primary-teal-light text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg mt-3"
       onClick={() => {
         // Track demo button click
         if (typeof gtag !== 'undefined') {
@@ -179,7 +182,7 @@ export function ChatWidget() {
       >
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="relative w-16 h-16 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-teal-500/30 group"
+          className="relative w-16 h-16 bg-gradient-to-r from-primary-teal to-primary-teal-dark hover:from-primary-teal-dark hover:to-primary-teal-light text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-primary-teal/30 group"
           aria-label={isOpen ? 'Close chat' : 'Open chat'}
         >
           <div className="flex items-center justify-center w-full h-full transition-transform duration-300">
@@ -192,35 +195,35 @@ export function ChatWidget() {
           
           {/* Pulse animation */}
           {!isOpen && (
-            <div className="absolute inset-0 rounded-full bg-teal-500 opacity-60 animate-ping" />
+            <div className="absolute inset-0 rounded-full bg-primary-teal opacity-60 animate-ping" />
           )}
         </button>
       </div>
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 h-[32rem] bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-800 z-50 flex flex-col overflow-hidden transition-all duration-300 animate-in slide-in-from-bottom-4 max-w-[calc(100vw-3rem)] md:max-w-96">
+        <div className="fixed bottom-24 right-6 w-96 h-[32rem] glass rounded-2xl shadow-2xl border border-gray-800/50 z-50 flex flex-col overflow-hidden transition-all duration-300 animate-in slide-in-from-bottom-4 max-w-[calc(100vw-3rem)] sm:max-w-96 lg:w-[28rem] lg:h-[36rem] xs:fixed xs:inset-0 xs:w-full xs:h-full xs:rounded-none xs:border-0 xs:bottom-0 xs:right-0">
           {/* Header */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-850 border-b border-gray-700 p-4">
+          <div className="bg-gradient-to-r from-primary-navy/80 to-primary-navy-light/80 backdrop-blur-sm border-b border-gray-700/50 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-r from-primary-teal to-primary-teal-dark rounded-lg flex items-center justify-center shadow-lg">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2L15.5 7H14V14H12V9H10V14H8V7H6.5L12 2Z" fill="white"/>
                     <circle cx="12" cy="18" r="2" fill="white"/>
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold text-sm">AI Receptionist</h3>
-                  <div className="flex items-center space-x-2 text-xs text-gray-400">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span>Online</span>
+                  <h3 className="text-white font-semibold text-sm">Kenneth - AI Receptionist</h3>
+                  <div className="flex items-center space-x-2 text-xs text-gray-300">
+                    <div className="w-2 h-2 bg-primary-teal rounded-full animate-pulse"></div>
+                    <span>Online & Ready to Help</span>
                   </div>
                 </div>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors p-1 rounded-md hover:bg-gray-700"
+                className="text-gray-300 hover:text-white transition-colors p-1 rounded-md hover:bg-gray-700/50"
                 aria-label="Close chat"
               >
                 <X size={20} />
@@ -235,7 +238,7 @@ export function ChatWidget() {
                 <div
                   className={`max-w-[80%] p-3 rounded-2xl text-sm ${
                     message.role === 'user'
-                      ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-br-md'
+                      ? 'bg-gradient-to-r from-primary-teal to-primary-teal-dark text-white rounded-br-md'
                       : 'bg-gray-800 text-gray-100 rounded-bl-md border border-gray-700'
                   }`}
                 >
@@ -255,9 +258,9 @@ export function ChatWidget() {
               <div className="flex justify-start">
                 <div className="bg-gray-800 border border-gray-700 p-3 rounded-2xl rounded-bl-md flex items-center space-x-2">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-primary-teal rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-primary-teal rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-2 h-2 bg-primary-teal rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
                   <span className="text-xs text-gray-400 ml-2">AI is typing...</span>
                 </div>
@@ -279,14 +282,14 @@ export function ChatWidget() {
                   onKeyDown={handleKeyDown}
                   placeholder="Type your message..."
                   disabled={isLoading}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                  className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-teal focus:border-transparent transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                   maxLength={500}
                 />
               </div>
               <button
                 type="submit"
                 disabled={!inputValue.trim() || isLoading}
-                className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 disabled:from-gray-600 disabled:to-gray-600 text-white p-3 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="bg-gradient-to-r from-primary-teal to-primary-teal-dark hover:from-primary-teal-dark hover:to-primary-teal-light disabled:from-gray-600 disabled:to-gray-600 text-white p-3 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary-teal"
                 aria-label="Send message"
               >
                 <Send size={18} />
