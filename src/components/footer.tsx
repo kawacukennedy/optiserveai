@@ -238,7 +238,7 @@ export function Footer() {
             className="pt-8 border-t border-foreground/10 flex flex-col md:flex-row justify-between items-center"
           >
             <div className="text-foreground/60 text-sm mb-4 md:mb-0">
-              © 2024 OptiServe AI. All rights reserved.
+              © 2025 OptiServe AI. All rights reserved.
             </div>
             <div className="flex space-x-8">
               <a href="#" className="text-foreground/60 hover:text-foreground text-sm transition-colors">

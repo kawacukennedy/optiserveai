@@ -91,12 +91,9 @@ export function Testimonials() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-6 leading-tight"
+            className="text-4xl md:text-5xl font-sf font-bold text-white mb-6 leading-tight"
           >
-            <span className="text-foreground">Trusted by Premium </span>
-            <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
-              Med-Spas Nationwide
-            </span>
+            Trusted by Premium Med-Spas Nationwide
           </motion.h2>
         </div>
 

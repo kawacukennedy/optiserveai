@@ -74,12 +74,9 @@ export function FAQ() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-6 leading-tight"
+            className="text-4xl md:text-5xl font-sf font-bold text-white mb-6 leading-tight"
           >
-            Everything You Need{" "}
-            <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
-              to Know
-            </span>
+            Everything You Need to Know
           </motion.h2>
           
           <motion.p
@@ -160,6 +157,11 @@ export function FAQ() {
               Our team is here to help you understand how OptiServe AI can transform your med-spa operations.
             </p>
             <motion.button
+              onClick={() => {
+                // Since we don't have useCal hook here, we can make it scroll to the top or use window to open booking
+                // For now, let's make it functional by scrolling to top and assuming main booking is there
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               whileHover={{ 
                 scale: 1.05,
                 boxShadow: "0 20px 40px rgba(0, 191, 166, 0.3)"
