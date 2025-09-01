@@ -29,10 +29,10 @@ export function Hero() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-sf-pro font-bold text-foreground mb-8 leading-tight tracking-tight"
+          className="text-5xl md:text-7xl lg:text-8xl font-sf-pro font-bold text-white mb-8 leading-tight tracking-tight"
         >
           <span className="block">Turn WhatsApp into your</span>
-          <span className="bg-gradient-to-r from-primary-teal via-primary-teal-light to-primary-teal bg-clip-text text-transparent">
+          <span className="text-primary-teal">
             24/7 Receptionist
           </span>
           <span className="block">for Med-Spas</span>
