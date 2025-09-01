@@ -93,9 +93,9 @@ export function Testimonials() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-6 leading-tight"
           >
-            Trusted by Premium 
+            <span className="text-foreground">Trusted by Premium </span>
             <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
-              {" "}Med-Spas Nationwide
+              Med-Spas Nationwide
             </span>
           </motion.h2>
         </div>

@@ -72,7 +72,7 @@ export function DemoShowcase() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-6 leading-tight"
           >
-            Watch OptiServe AI{" "}
+            <span className="text-foreground">Watch OptiServe AI </span>
             <span className="bg-gradient-to-r from-primary-teal to-primary-navy bg-clip-text text-transparent">
               Transform Your Client Experience
             </span>

@@ -60,9 +60,9 @@ export function WhoWeAre() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-4xl md:text-5xl font-sf font-bold text-foreground mb-8 leading-tight"
             >
-              AI-Powered Solutions for 
+              <span className="text-foreground">AI-Powered Solutions for </span>
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                {" "}Home Service Pros
+                Home Service Pros
               </span>
             </motion.h2>
             

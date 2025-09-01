@@ -64,11 +64,11 @@ export function MissionPromise() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl md:text-6xl font-sf font-bold text-foreground mb-8 leading-tight max-w-5xl mx-auto"
           >
-            We help service pros 
+            <span className="text-foreground">We help service pros </span>
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
               {" "}reclaim time, reduce overhead,{" "}
             </span>
-            and grow their business with focused AI automation.
+            <span className="text-foreground">and grow their business with focused AI automation.</span>
           </motion.h2>
           
           <motion.p

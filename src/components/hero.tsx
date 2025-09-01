@@ -31,11 +31,11 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-sf-pro font-bold text-white mb-8 leading-tight tracking-tight"
         >
-          <span className="block">Turn WhatsApp into your</span>
+          <span className="block text-white">Turn WhatsApp into your</span>
           <span className="text-primary-teal">
             24/7 Receptionist
           </span>
-          <span className="block">for Med-Spas</span>
+          <span className="block text-white">for Med-Spas</span>
         </motion.h1>
 
         <motion.p
