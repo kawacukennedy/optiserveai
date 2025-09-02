@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// Initialize Gemini AI
+// Initialize Gemini AI with environment variable
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 // System prompt for OptiServe AI receptionist
