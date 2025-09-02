@@ -10,11 +10,6 @@ interface Message {
   timestamp: Date;
 }
 
-interface ChatResponse {
-  reply: string;
-  showDemoButton?: boolean;
-  timestamp: string;
-}
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +24,7 @@ export function ChatWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -63,6 +59,19 @@ export function ChatWidget() {
     setIsLoading(true);
     setIsTyping(true);
 
+    // Create streaming assistant message
+    const streamingMessageId = generateId();
+    const initialAssistantMessage: Message = {
+      id: streamingMessageId,
+      content: '',
+      role: 'assistant',
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, initialAssistantMessage]);
+    setIsTyping(false); // Stop typing indicator, start streaming
+    setStreamingMessageId(streamingMessageId);
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -85,22 +94,60 @@ export function ChatWidget() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data: ChatResponse = await response.json();
+      if (!response.body) {
+        throw new Error('No response body');
+      }
 
-      // Brief typing simulation for natural feel
-      await new Promise(resolve => setTimeout(resolve, 300));
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let shouldShowDemoButton = false;
 
-      const assistantMessage: Message = {
-        id: generateId(),
-        content: data.reply,
-        role: 'assistant',
-        timestamp: new Date(),
-      };
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-      setMessages(prev => [...prev, assistantMessage]);
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                
+                if (data.type === 'chunk') {
+                  // Update the streaming message with new content
+                  setMessages(prev => prev.map(msg => 
+                    msg.id === streamingMessageId 
+                      ? { ...msg, content: msg.content + data.chunk }
+                      : msg
+                  ));
+                } else if (data.type === 'complete') {
+                  // Finalize the message
+                  shouldShowDemoButton = data.showDemoButton;
+                  setMessages(prev => prev.map(msg => 
+                    msg.id === streamingMessageId 
+                      ? { ...msg, content: data.fullResponse }
+                      : msg
+                  ));
+                  setStreamingMessageId(null);
+                } else if (data.type === 'error') {
+                  throw new Error(data.error);
+                }
+              } catch (parseError) {
+                console.error('Error parsing streaming data:', parseError);
+              }
+            }
+          }
+        }
+      } finally {
+        reader.releaseLock();
+      }
 
       // Add demo button message if needed
-      if (data.showDemoButton) {
+      if (shouldShowDemoButton) {
         setTimeout(() => {
           const demoMessage: Message = {
             id: generateId(),
@@ -113,13 +160,15 @@ export function ChatWidget() {
       }
     } catch (error) {
       console.error('Chat error:', error);
-      const errorMessage: Message = {
-        id: generateId(),
-        content: 'I apologize, but I\'m experiencing technical difficulties. Please refresh the page and try again, or contact us directly for assistance.',
-        role: 'assistant',
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      // Replace the streaming message with error message
+      setMessages(prev => prev.map(msg => 
+        msg.id === streamingMessageId 
+          ? { 
+              ...msg, 
+              content: 'I apologize, but I\'m experiencing technical difficulties. Please refresh the page and try again, or contact us directly for assistance.' 
+            }
+          : msg
+      ));
     } finally {
       setIsTyping(false);
       setIsLoading(false);

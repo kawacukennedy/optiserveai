@@ -84,58 +84,99 @@ export async function POST(request: NextRequest) {
     
     conversationContext += `User: ${message}\nAssistant:`;
 
-    // Generate response
-    const result = await model.generateContent(conversationContext);
-    const response = await result.response;
-    const aiReply = response.text();
+    // Generate streaming response
+    const result = await model.generateContentStream(conversationContext);
+    
+    // Create a readable stream
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        let fullResponse = '';
+        
+        try {
+          for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            fullResponse += chunkText;
+            
+            // Send chunk to client
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
+              chunk: chunkText,
+              type: 'chunk'
+            })}\n\n`));
+          }
+          
+          // Smart demo button logic after full response is generated
+          const lowerMessage = message.toLowerCase();
+          const lowerReply = fullResponse.toLowerCase();
+          
+          // Check if demo button was already shown recently
+          const recentDemoShown = conversationHistory.slice(-4).some(msg => 
+            msg.role === 'assistant' && msg.content.includes('DEMO_BUTTON')
+          );
+          
+          // High-intent keywords that strongly indicate demo interest
+          const highIntentKeywords = [
+            'pricing', 'cost', 'price', 'how much', 'get started', 'sign up',
+            'trial', 'demo', 'schedule', 'book', 'meeting', 'call',
+            'interested in', 'want to try', 'ready to'
+          ];
+          
+          // Medium-intent patterns that suggest potential interest
+          const mediumIntentPatterns = [
+            'how does it work', 'tell me more', 'sounds good', 'that\'s great',
+            'impressive', 'helpful', 'exactly what', 'perfect for'
+          ];
+          
+          // Check for high intent in user message or AI mentioning demo/consultation
+          const hasHighIntent = highIntentKeywords.some(keyword => 
+            lowerMessage.includes(keyword) || lowerReply.includes(keyword)
+          );
+          
+          // Check for medium intent and conversation depth
+          const hasMediumIntent = mediumIntentPatterns.some(pattern => 
+            lowerMessage.includes(pattern)
+          );
+          
+          // Only show demo button if:
+          // 1. High intent is detected, OR
+          // 2. Medium intent + conversation is progressing (3+ exchanges) + no recent demo shown
+          const shouldShowDemoButton = !recentDemoShown && (
+            hasHighIntent || 
+            (hasMediumIntent && conversationHistory.length >= 4)
+          );
+          
+          // Send completion data
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
+            type: 'complete',
+            fullResponse,
+            showDemoButton: shouldShowDemoButton,
+            timestamp: new Date().toISOString()
+          })}\n\n`));
+          
+          // Log for monitoring
+          console.log(`Chat streaming: ${message.substring(0, 50)}... -> ${fullResponse.substring(0, 50)}...`);
+          
+        } catch (error) {
+          console.error('Streaming error:', error);
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ 
+            type: 'error',
+            error: 'Sorry, I encountered an issue. Please try again.'
+          })}\n\n`));
+        } finally {
+          controller.close();
+        }
+      }
+    });
 
-    // Smart demo button logic - only show when there's clear intent
-    const lowerMessage = message.toLowerCase();
-    const lowerReply = aiReply.toLowerCase();
-    
-    // Check if demo button was already shown recently
-    const recentDemoShown = conversationHistory.slice(-4).some(msg => 
-      msg.role === 'assistant' && msg.content.includes('DEMO_BUTTON')
-    );
-    
-    // High-intent keywords that strongly indicate demo interest
-    const highIntentKeywords = [
-      'pricing', 'cost', 'price', 'how much', 'get started', 'sign up',
-      'trial', 'demo', 'schedule', 'book', 'meeting', 'call',
-      'interested in', 'want to try', 'ready to'
-    ];
-    
-    // Medium-intent patterns that suggest potential interest
-    const mediumIntentPatterns = [
-      'how does it work', 'tell me more', 'sounds good', 'that\'s great',
-      'impressive', 'helpful', 'exactly what', 'perfect for'
-    ];
-    
-    // Check for high intent in user message or AI mentioning demo/consultation
-    const hasHighIntent = highIntentKeywords.some(keyword => 
-      lowerMessage.includes(keyword) || lowerReply.includes(keyword)
-    );
-    
-    // Check for medium intent and conversation depth
-    const hasMediumIntent = mediumIntentPatterns.some(pattern => 
-      lowerMessage.includes(pattern)
-    );
-    
-    // Only show demo button if:
-    // 1. High intent is detected, OR
-    // 2. Medium intent + conversation is progressing (3+ exchanges) + no recent demo shown
-    const shouldShowDemoButton = !recentDemoShown && (
-      hasHighIntent || 
-      (hasMediumIntent && conversationHistory.length >= 4)
-    );
-
-    // Log for monitoring (remove in production)
-    console.log(`Chat interaction: ${message.substring(0, 50)}... -> ${aiReply.substring(0, 50)}...`);
-
-    return NextResponse.json({
-      reply: aiReply,
-      showDemoButton: shouldShowDemoButton,
-      timestamp: new Date().toISOString()
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      }
     });
 
   } catch (error) {
