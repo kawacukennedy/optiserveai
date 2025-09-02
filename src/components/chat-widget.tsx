@@ -71,10 +71,12 @@ export function ChatWidget() {
     setIsTyping(false); // Stop typing indicator, start streaming
 
     try {
-      const response = await fetch('/api/chat', {
+      // Try streaming first with proper headers
+      const streamResponse = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'text/event-stream'
         },
         body: JSON.stringify({
           message: content.trim(),
@@ -88,59 +90,72 @@ export function ChatWidget() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!streamResponse.ok) {
+        throw new Error(`HTTP error! status: ${streamResponse.status}`);
       }
 
-      if (!response.body) {
-        throw new Error('No response body');
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
+      // Check if we got a streaming response
+      const contentType = streamResponse.headers.get('content-type');
       let shouldShowDemoButton = false;
 
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+      if (contentType?.includes('text/event-stream') && streamResponse.body) {
+        // Handle streaming response
+        const reader = streamResponse.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
 
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n\n');
-          buffer = lines.pop() || '';
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                
-                if (data.type === 'chunk') {
-                  // Update the streaming message with new content
-                  setMessages(prev => prev.map(msg => 
-                    msg.id === streamingMessageId 
-                      ? { ...msg, content: msg.content + data.chunk }
-                      : msg
-                  ));
-                } else if (data.type === 'complete') {
-                  // Finalize the message
-                  shouldShowDemoButton = data.showDemoButton;
-                  setMessages(prev => prev.map(msg => 
-                    msg.id === streamingMessageId 
-                      ? { ...msg, content: data.fullResponse }
-                      : msg
-                  ));
-                } else if (data.type === 'error') {
-                  throw new Error(data.error);
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                try {
+                  const data = JSON.parse(line.slice(6));
+                  
+                  if (data.type === 'chunk') {
+                    // Update the streaming message with new content
+                    setMessages(prev => prev.map(msg => 
+                      msg.id === streamingMessageId 
+                        ? { ...msg, content: msg.content + data.chunk }
+                        : msg
+                    ));
+                  } else if (data.type === 'complete') {
+                    // Finalize the message
+                    shouldShowDemoButton = data.showDemoButton;
+                    setMessages(prev => prev.map(msg => 
+                      msg.id === streamingMessageId 
+                        ? { ...msg, content: data.fullResponse }
+                        : msg
+                    ));
+                  } else if (data.type === 'error') {
+                    throw new Error(data.error);
+                  }
+                } catch (parseError) {
+                  console.error('Error parsing streaming data:', parseError);
                 }
-              } catch (parseError) {
-                console.error('Error parsing streaming data:', parseError);
               }
             }
           }
+        } finally {
+          reader.releaseLock();
         }
-      } finally {
-        reader.releaseLock();
+      } else {
+        // Handle regular JSON response (fallback)
+        const data = await streamResponse.json();
+        shouldShowDemoButton = data.showDemoButton || false;
+        
+        // Update the message with the complete response
+        setMessages(prev => prev.map(msg => 
+          msg.id === streamingMessageId 
+            ? { ...msg, content: data.reply || data.error || 'No response received' }
+            : msg
+        ));
       }
 
       // Add demo button message if needed
