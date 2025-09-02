@@ -24,7 +24,6 @@ export function ChatWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -70,7 +69,6 @@ export function ChatWidget() {
 
     setMessages(prev => [...prev, initialAssistantMessage]);
     setIsTyping(false); // Stop typing indicator, start streaming
-    setStreamingMessageId(streamingMessageId);
 
     try {
       const response = await fetch('/api/chat', {
@@ -132,7 +130,6 @@ export function ChatWidget() {
                       ? { ...msg, content: data.fullResponse }
                       : msg
                   ));
-                  setStreamingMessageId(null);
                 } else if (data.type === 'error') {
                   throw new Error(data.error);
                 }

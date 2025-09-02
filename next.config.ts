@@ -74,11 +74,12 @@ const nextConfig: NextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
   
   // Minimal webpack configuration (when not using Turbopack)
-  webpack: (config, { dev }) => {
-    if (dev) {
-      // Enable source maps in development
-      config.devtool = 'eval-source-map'
+  webpack: (config, { dev, isServer }) => {
+    // Only apply custom devtool in production to avoid performance issues
+    if (!dev) {
+      config.devtool = isServer ? false : 'source-map'
     }
+    // In development, let Next.js use its optimal devtool
     return config
   }
 };
