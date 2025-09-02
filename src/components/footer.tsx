@@ -156,6 +156,7 @@ export function Footer() {
                     width={48}
                     height={48}
                     className="object-contain"
+                    priority
                   />
                 </div>
                 <span className="font-sf-pro font-semibold text-xl text-foreground">

@@ -11,30 +11,23 @@ declare global {
   }
 }
 
-export function CalendlyPreload() {
+interface CalendlyPreloadProps {
+  /** Only preload when user shows intent to use calendar */
+  enabled?: boolean
+}
+
+export function CalendlyPreload({ enabled = false }: CalendlyPreloadProps) {
   useEffect(() => {
-    // Early preload of Calendly resources
+    // Only preload if explicitly enabled to avoid unnecessary resource loading
+    if (!enabled) return
+
+    // Check if Calendly resources are already loaded
+    if (document.querySelector('link[href*="calendly.com"]')) {
+      return // Already loaded
+    }
+
     const preloadCalendlyAssets = () => {
-      // Early load of the CSS
-      const cssLink = document.createElement('link')
-      cssLink.rel = 'stylesheet'
-      cssLink.href = 'https://assets.calendly.com/assets/external/widget.css'
-      
-      // Preload the main Calendly widget script
-      const scriptPreload = document.createElement('link')
-      scriptPreload.rel = 'preload'
-      scriptPreload.href = 'https://assets.calendly.com/assets/external/widget.js'
-      scriptPreload.as = 'script'
-      scriptPreload.crossOrigin = 'anonymous'
-      
-      // Preload Calendly CSS
-      const cssPreload = document.createElement('link')
-      cssPreload.rel = 'preload'
-      cssPreload.href = 'https://assets.calendly.com/assets/external/widget.css'
-      cssPreload.as = 'style'
-      cssPreload.crossOrigin = 'anonymous'
-      
-      // DNS prefetch for Calendly domains
+      // DNS prefetch for faster connection when needed
       const dnsPrefetch1 = document.createElement('link')
       dnsPrefetch1.rel = 'dns-prefetch'
       dnsPrefetch1.href = '//calendly.com'
@@ -47,39 +40,44 @@ export function CalendlyPreload() {
       dnsPrefetch3.rel = 'dns-prefetch'
       dnsPrefetch3.href = '//api.calendly.com'
       
-      // Preconnect to Calendly
+      // Preconnect only when we know user will use it
       const preconnect = document.createElement('link')
       preconnect.rel = 'preconnect'
       preconnect.href = 'https://calendly.com'
       preconnect.crossOrigin = 'anonymous'
       
-      // Add all to head in optimal order
+      // Preload the CSS
+      const cssPreload = document.createElement('link')
+      cssPreload.rel = 'preload'
+      cssPreload.href = 'https://assets.calendly.com/assets/external/widget.css'
+      cssPreload.as = 'style'
+      cssPreload.crossOrigin = 'anonymous'
+      
+      // Preload the script
+      const scriptPreload = document.createElement('link')
+      scriptPreload.rel = 'preload'
+      scriptPreload.href = 'https://assets.calendly.com/assets/external/widget.js'
+      scriptPreload.as = 'script'
+      scriptPreload.crossOrigin = 'anonymous'
+      
+      // Add to head in optimal order
       document.head.appendChild(dnsPrefetch1)
       document.head.appendChild(dnsPrefetch2)
       document.head.appendChild(dnsPrefetch3)
       document.head.appendChild(preconnect)
-      document.head.appendChild(cssLink)
-      document.head.appendChild(scriptPreload)
       document.head.appendChild(cssPreload)
-
-      // Start loading the script early
-      const earlyScript = document.createElement('script')
-      earlyScript.src = scriptPreload.href
-      earlyScript.async = true
-      earlyScript.crossOrigin = 'anonymous'
-      document.head.appendChild(earlyScript)
+      document.head.appendChild(scriptPreload)
     }
 
-    // Run on component mount with requestIdleCallback for better performance
+    // Use requestIdleCallback for better performance
     if (typeof window !== 'undefined') {
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(preloadCalendlyAssets)
       } else {
-        setTimeout(preloadCalendlyAssets, 1)
+        setTimeout(preloadCalendlyAssets, 100) // Small delay to not block initial render
       }
     }
-  }, [])
+  }, [enabled])
 
-  // This component doesn't render anything
-  return null
+  return null // This component doesn't render anything
 }

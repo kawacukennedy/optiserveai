@@ -17,9 +17,9 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
-              "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com",
+              "style-src 'self' 'unsafe-inline' https://assets.calendly.com https://calendly.com https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
-              "font-src 'self' https://assets.calendly.com",
+              "font-src 'self' https://assets.calendly.com https://fonts.gstatic.com",
               "connect-src 'self' https://api.calendly.com https://calendly.com wss://calendly.com",
               "frame-src 'self' https://calendly.com",
               "media-src 'self' https://assets.calendly.com",
