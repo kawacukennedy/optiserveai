@@ -1,17 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configure Turbopack (Next.js 15.3.0+)
-  turbopack: {
-    rules: {
-      // Handle SVG files as React components
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js'
-      }
-    }
-  },
-  
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react']

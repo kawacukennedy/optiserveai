@@ -158,10 +158,13 @@ export function ChatWidget() {
       className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-teal to-primary-teal-dark hover:from-primary-teal-dark hover:to-primary-teal-light text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg mt-3"
       onClick={() => {
         // Track demo button click
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'demo_button_clicked', {
-            event_category: 'chat_widget',
-          });
+        if (typeof window !== 'undefined' && 'gtag' in window) {
+          const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag;
+          if (gtag) {
+            gtag('event', 'demo_button_clicked', {
+              event_category: 'chat_widget',
+            });
+          }
         }
       }}
     >
